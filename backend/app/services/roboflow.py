@@ -2,7 +2,7 @@ import io
 import os
 import uuid
 import base64
-from PIL import Image
+from PIL import Image, ImageOps
 from fastapi import HTTPException
 from inference_sdk import InferenceHTTPClient
 from app.config import settings
@@ -18,12 +18,15 @@ client = InferenceHTTPClient(
 
 async def run_roboflow_workflow(image_bytes: bytes) -> dict:
     try:
-        image = Image.open(io.BytesIO(image_bytes))
+        # Kirim bytes langsung sebagai base64. Jangan pakai PIL Image
+        # karna library inference_sdk secara otomatis nge-resize/compress
+        # gambar ke kotak kecil (640x640) jika inputnya berupa PIL Image.
+        base64_image = base64.b64encode(image_bytes).decode("utf-8")
         
         raw_result = client.run_workflow(
             workspace_name=settings.ROBOFLOW_WORKSPACE,
             workflow_id=settings.ROBOFLOW_WORKFLOW,
-            images={"image": image},
+            images={"image": base64_image},
             use_cache=True
         )
         

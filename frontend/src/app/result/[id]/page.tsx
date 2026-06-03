@@ -110,7 +110,7 @@ export default function ResultPage() {
                   <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">Foto beranotasi</p>
                   <h2 className="font-display text-lg font-semibold tracking-tight text-slate-900">Hasil prediksi Roboflow</h2>
                   <div className="mt-3">
-                    <img src={annotatedImageUrl} alt="Hasil prediksi Roboflow" className="w-full rounded-md border border-slate-200 bg-white object-contain" />
+                    <img src={annotatedImageUrl} alt="Hasil prediksi Roboflow" className="w-full max-h-[70vh] rounded-md border border-slate-200 bg-white object-contain" />
                   </div>
                   <div className="mt-3 flex gap-2">
                     <a href={annotatedImageUrl} download>
